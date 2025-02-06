@@ -55,5 +55,20 @@ namespace MvcCorePracticaFinal.Controllers
             this.repo.DeleteDoctor(numeroDoc);
             return RedirectToAction("Index");
         }
+
+        public IActionResult Edit(int numeroDoc)
+        {
+            Doctor d =  this.repo.FindDoctor(numeroDoc);
+            return View(d);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Doctor d)
+        {
+            await this.repo.UpdateDoctorAsync(d.HospitalCod, d.DoctorNo, d.Apellido, d.Especialidad, d.Salario);
+            return RedirectToAction("Index");
+        }
+
+
     }
 }

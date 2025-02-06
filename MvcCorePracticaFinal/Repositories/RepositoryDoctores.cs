@@ -144,5 +144,23 @@ namespace MvcCorePracticaFinal.Repositories
             this.cn.Close();
             this.com.Parameters.Clear();
         }
+
+        public async Task UpdateDoctorAsync(int hospitalCod, int doctorNo, string apellido, string especialidad, int salario)
+        {
+            string sql = "update DOCTOR set HOSPITAL_COD=@hospitalCod "
+        + ", DOCTOR_NO=@doctorNo, APELLIDO=@apellido, ESPECIALIDAD=@especialidad, SALARIO=@salario "
+        + " where DOCTOR_NO=@doctorNo";
+            this.com.Parameters.AddWithValue("@hospitalCod", hospitalCod);
+            this.com.Parameters.AddWithValue("@doctorNo", doctorNo);
+            this.com.Parameters.AddWithValue("@apellido", apellido);
+            this.com.Parameters.AddWithValue("@especialidad", especialidad);
+            this.com.Parameters.AddWithValue("@salario", salario);    
+            this.com.CommandType = CommandType.Text;
+            this.com.CommandText = sql;
+            await this.cn.OpenAsync();
+            await this.com.ExecuteNonQueryAsync();
+            await this.cn.CloseAsync();
+            this.com.Parameters.Clear();
+        }
     }
 }
